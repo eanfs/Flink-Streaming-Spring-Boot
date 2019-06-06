@@ -4,7 +4,7 @@ The application submits a Flink job via Flink's remote environment. The job is s
 
 ## How to run
 
-See `com.tenble.flink.streaming.springboot.FlinkStreamingSpringBootTest` as an example.
+See `FlinkStreamingSpringBootTest` as an example.
 
 1. Import this project as a dependency for another project.
 2. Add `@EnableAutoConfigure` to your spring boot app.

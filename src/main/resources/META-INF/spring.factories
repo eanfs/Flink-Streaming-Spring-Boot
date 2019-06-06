@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.tenble.flink.streaming.springboot.FlinkAutoConfiguration
+  com.esenyun.flink.streaming.springboot.FlinkAutoConfiguration

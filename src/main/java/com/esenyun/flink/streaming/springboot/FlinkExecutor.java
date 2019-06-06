@@ -1,7 +1,8 @@
-package com.tenble.flink.streaming.springboot;
+package com.esenyun.flink.streaming.springboot;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
@@ -9,8 +10,9 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.task.TaskExecutor;
 
-@Slf4j
 public class FlinkExecutor {
+    private static final Logger log = LoggerFactory.getLogger(FlinkExecutor.class);
+
 
     private final ApplicationContext appCtx;
     private final TaskExecutor taskExecutor;

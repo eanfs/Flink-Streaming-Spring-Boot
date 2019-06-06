@@ -1,30 +1,23 @@
-package com.tenble.flink.streaming.springboot;
+package com.esenyun.flink.streaming.springboot;
 
-import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.common.typeutils.base.IntSerializer;
-import org.apache.flink.api.common.typeutils.base.StringSerializer;
 import org.apache.flink.core.fs.FileSystem;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.source.FromElementsFunction;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -34,7 +27,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
     FlinkStreamingSpringBootTest.FlinkStreamingSpringBootTestPropertiesConfiguration.class,
     FlinkStreamingSpringBootTest.FlinkStreamingSpringBootTestConfiguration.class
 })
-@ComponentScan("com.tenble.flink.streaming.springboot")
+@ComponentScan("com.esenyun.flink.streaming.springboot")
 public class FlinkStreamingSpringBootTest {
 
     @TestConfiguration
