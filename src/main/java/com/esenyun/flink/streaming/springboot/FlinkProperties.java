@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Component
-@ConfigurationProperties(prefix = "flink-properties")
+@ConfigurationProperties(prefix = "esenyun.flink")
 public class FlinkProperties {
 
     @NotNull
