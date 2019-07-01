@@ -56,9 +56,9 @@ public class FlinkStreamingSpringBootTest {
         }
 
         @Autowired
-        void populateEnv(StreamExecutionEnvironment flinkEnvironment, String outputFileName)
+        void populateEnv(StreamExecutionEnvironment streamEnvironment, String outputFileName)
             throws IOException {
-            flinkEnvironment
+            streamEnvironment
                 .addSource(
                     new FromElementsFunction<>(new IntSerializer(), 1, 2, 3),
                     TypeInformation.of(Integer.class))

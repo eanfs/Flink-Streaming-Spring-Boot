@@ -2,6 +2,8 @@ package com.esenyun.flink.streaming.springboot;
 
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +15,13 @@ import org.springframework.core.task.TaskExecutor;
 @EnableConfigurationProperties(FlinkProperties.class)
 public class FlinkAutoConfiguration {
 
+    private static final Logger log = LoggerFactory.getLogger(FlinkAutoConfiguration.class);
+
     @Bean
     FlinkExecutor flinkExecutor(ApplicationContext appCtx, TaskExecutor taskExecutor,
-        FlinkProperties flinkProperties, StreamExecutionEnvironment flinkEnvironment) {
+        FlinkProperties flinkProperties, StreamExecutionEnvironment streamEnvironment) {
 
-        return new FlinkExecutor(appCtx, taskExecutor, flinkProperties, flinkEnvironment);
+        return new FlinkExecutor(appCtx, taskExecutor, flinkProperties, streamEnvironment);
     }
 
     @Bean("taskExecutor")
@@ -29,6 +33,7 @@ public class FlinkAutoConfiguration {
     StreamExecutionEnvironment getStreamEnvironment(FlinkProperties flinkProperties) {
         long maxBytes = flinkProperties.getMaxClientRestRequestSizeBytes();
         org.apache.flink.configuration.Configuration config = new org.apache.flink.configuration.Configuration();
+        log.info("Set streamEnvironment with address:{} port:{}", flinkProperties.getJobManagerUrl(), flinkProperties.getJobManagerPort());
         config.setString("rest.address", flinkProperties.getJobManagerUrl());
         config.setInteger("rest.port", flinkProperties.getJobManagerPort());
         config.setLong("rest.client.max-content-length", maxBytes);
@@ -47,6 +52,7 @@ public class FlinkAutoConfiguration {
     ExecutionEnvironment getExecutionEnvironment(FlinkProperties flinkProperties) {
         long maxBytes = flinkProperties.getMaxClientRestRequestSizeBytes();
         org.apache.flink.configuration.Configuration config = new org.apache.flink.configuration.Configuration();
+        log.info("Set streamEnvironment with address:{} port:{}", flinkProperties.getJobManagerUrl(), flinkProperties.getJobManagerPort());
         config.setString("rest.address", flinkProperties.getJobManagerUrl());
         config.setInteger("rest.port", flinkProperties.getJobManagerPort());
         config.setLong("rest.client.max-content-length", maxBytes);
