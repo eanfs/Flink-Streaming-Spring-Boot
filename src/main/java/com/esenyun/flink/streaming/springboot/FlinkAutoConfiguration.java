@@ -1,5 +1,6 @@
 package com.esenyun.flink.streaming.springboot;
 
+import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -24,8 +25,8 @@ public class FlinkAutoConfiguration {
         return new SimpleAsyncTaskExecutor();
     }
 
-    @Bean("flinkEnvironment")
-    StreamExecutionEnvironment getFlinkEnvironment(FlinkProperties flinkProperties) {
+    @Bean("streamEnvironment")
+    StreamExecutionEnvironment getStreamEnvironment(FlinkProperties flinkProperties) {
         long maxBytes = flinkProperties.getMaxClientRestRequestSizeBytes();
         org.apache.flink.configuration.Configuration config = new org.apache.flink.configuration.Configuration();
         config.setString("rest.address", flinkProperties.getJobManagerUrl());
@@ -39,5 +40,23 @@ public class FlinkAutoConfiguration {
             flinkProperties.getJobManagerPort(),
             config,
             flinkProperties.getRemoteEnvJarFiles().stream().toArray(String[]::new));
+    }
+
+
+    @Bean("executionEnvironment")
+    ExecutionEnvironment getExecutionEnvironment(FlinkProperties flinkProperties) {
+        long maxBytes = flinkProperties.getMaxClientRestRequestSizeBytes();
+        org.apache.flink.configuration.Configuration config = new org.apache.flink.configuration.Configuration();
+        config.setString("rest.address", flinkProperties.getJobManagerUrl());
+        config.setInteger("rest.port", flinkProperties.getJobManagerPort());
+        config.setLong("rest.client.max-content-length", maxBytes);
+        config.setLong("rest.server.max-content-length", maxBytes);
+        config.setString("akka.framesize", maxBytes + "b");
+
+        return ExecutionEnvironment.createRemoteEnvironment(
+                flinkProperties.getJobManagerUrl(),
+                flinkProperties.getJobManagerPort(),
+                config,
+                flinkProperties.getRemoteEnvJarFiles().stream().toArray(String[]::new));
     }
 }

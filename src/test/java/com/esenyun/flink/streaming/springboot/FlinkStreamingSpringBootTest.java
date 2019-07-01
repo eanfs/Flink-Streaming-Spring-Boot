@@ -2,6 +2,7 @@ package com.esenyun.flink.streaming.springboot;
 
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.common.typeutils.base.IntSerializer;
+import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.core.fs.FileSystem;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.source.FromElementsFunction;
@@ -42,10 +43,16 @@ public class FlinkStreamingSpringBootTest {
     @TestConfiguration
     static class FlinkStreamingSpringBootTestConfiguration {
 
-        @Bean("flinkEnvironment")
+        @Bean("streamEnvironment")
         @Primary
-        StreamExecutionEnvironment getFlinkEnvironment(FlinkProperties flinkProperties) {
+        StreamExecutionEnvironment getStreamEnvironment(FlinkProperties flinkProperties) {
             return StreamExecutionEnvironment.createLocalEnvironment();
+        }
+
+        @Bean("executionEnvironment")
+        @Primary
+        ExecutionEnvironment getExecutionEnvironment(FlinkProperties flinkProperties) {
+            return ExecutionEnvironment.createLocalEnvironment();
         }
 
         @Autowired
